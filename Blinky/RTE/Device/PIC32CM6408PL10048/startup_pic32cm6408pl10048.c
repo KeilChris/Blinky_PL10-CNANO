@@ -1,0 +1,163 @@
+/*
+ * ARMCC startup file for PIC32CM6408PL10048
+ *
+ * Copyright (c) 2026 Microchip Technology Inc. and its subsidiaries.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+#include "pic32cm6408pl10048.h"
+
+// Check if DeviceVectors is defined and create a typedef to VECTOR_TABLE_Type
+#ifndef DEVICE_VECTORS_DEFINE
+    typedef DeviceVectors VECTOR_TABLE_Type; // Defines the toolchain agnostic type of the vector table type defined in the 'pic32cm6408pl10048.h'
+
+    #define DEVICE_VECTORS_DEFINE
+#endif
+
+
+/*---------------------------------------------------------------------------
+  External References
+ *---------------------------------------------------------------------------*/
+extern uint32_t __INITIAL_SP;
+extern uint32_t __STACK_LIMIT;
+#if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+extern uint32_t __STACK_SEAL;
+#endif
+
+extern __NO_RETURN void __PROGRAM_START(void);
+
+/*---------------------------------------------------------------------------
+  Internal References
+ *---------------------------------------------------------------------------*/
+__NO_RETURN void Reset_Handler  (void);
+__NO_RETURN void Default_Handler(void);
+
+/*---------------------------------------------------------------------------
+  Exception / Interrupt Handler
+ *---------------------------------------------------------------------------*/
+
+/* Cortex-M0PLUS core handlers */
+void NonMaskableInt_Handler ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void HardFault_Handler    ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void SVC_Handler       ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void PendSV_Handler       ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void SysTick_Handler      ( void ) __attribute__ ((weak, alias("Default_Handler")));
+
+/* Peripherals handlers */
+void SYSTEM_Handler       ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void WDT_Handler          ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void RTC_Handler          ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void EIC_Handler          ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void NVMCTRL_Handler      ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void DMAC_Handler         ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void EVSYS_Handler        ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void SERCOM0_Handler      ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void SERCOM1_Handler      ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void TC0_Handler          ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void TC1_Handler          ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void TC2_Handler          ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void TCC0_Handler         ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void ADC0_Handler         ( void ) __attribute__ ((weak, alias("Default_Handler")));
+void AC_Handler           ( void ) __attribute__ ((weak, alias("Default_Handler")));
+
+
+/*----------------------------------------------------------------------------
+  Exception / Interrupt Vector table
+ *----------------------------------------------------------------------------*/
+
+#if defined ( __GNUC__ )
+    #pragma GCC diagnostic push
+    #pragma GCC diagnostic ignored "-Wpedantic"
+#endif
+
+extern const VECTOR_TABLE_Type __VECTOR_TABLE;
+const VECTOR_TABLE_Type __VECTOR_TABLE __VECTOR_TABLE_ATTRIBUTE = {
+        .pvStack = (void*) (&__INITIAL_SP),       /*     Initial Stack Pointer */
+
+
+
+        .pfnReset_Handler              = (void*) Reset_Handler,
+        .pfnNonMaskableInt_Handler     = (void*) NonMaskableInt_Handler,
+        .pfnHardFault_Handler          = (void*) HardFault_Handler,
+        .pvReservedC12                 = (void*) (0UL), /* Reserved */
+        .pvReservedC11                 = (void*) (0UL), /* Reserved */
+        .pvReservedC10                 = (void*) (0UL), /* Reserved */
+        .pvReservedC9                  = (void*) (0UL), /* Reserved */
+        .pvReservedC8                  = (void*) (0UL), /* Reserved */
+        .pvReservedC7                  = (void*) (0UL), /* Reserved */
+        .pvReservedC6                  = (void*) (0UL), /* Reserved */
+        .pfnSVCall_Handler             = (void*) SVC_Handler,
+        .pvReservedC4                  = (void*) (0UL), /* Reserved */
+        .pvReservedC3                  = (void*) (0UL), /* Reserved */
+        .pfnPendSV_Handler             = (void*) PendSV_Handler,
+        .pfnSysTick_Handler            = (void*) SysTick_Handler,
+
+        /* Configurable interrupts */
+        .pfnSYSTEM_Handler             = (void*) SYSTEM_Handler, /* 0  Main Clock */
+        .pfnWDT_Handler                = (void*) WDT_Handler,    /* 1  Watchdog Timer */
+        .pfnRTC_Handler                = (void*) RTC_Handler,    /* 2  Real-Time Counter */
+        .pfnEIC_Handler                = (void*) EIC_Handler,    /* 3  External Interrupt Controller */
+        .pfnNVMCTRL_Handler            = (void*) NVMCTRL_Handler, /* 4  Non-Volatile Memory Controller */
+        .pfnDMAC_Handler               = (void*) DMAC_Handler,   /* 5  Direct Memory Access Controller */
+        .pfnEVSYS_Handler              = (void*) EVSYS_Handler,  /* 6  Event System */
+        .pfnSERCOM0_Handler            = (void*) SERCOM0_Handler, /* 7  Serial Communication Interface */
+        .pfnSERCOM1_Handler            = (void*) SERCOM1_Handler, /* 8  Serial Communication Interface */
+        .pfnTC0_Handler                = (void*) TC0_Handler,    /* 9  Timer/Counter */
+        .pfnTC1_Handler                = (void*) TC1_Handler,    /* 10 Timer/Counter */
+        .pfnTC2_Handler                = (void*) TC2_Handler,    /* 11 Timer/Counter */
+        .pfnTCC0_Handler               = (void*) TCC0_Handler,   /* 12 Timer/Counter for Control Applications */
+        .pfnADC0_Handler               = (void*) ADC0_Handler,   /* 13 Analog-to-Digital Converter */
+        .pfnAC_Handler                 = (void*) AC_Handler      /* 14 Analog Comparator */
+};
+
+#if defined ( __GNUC__ )
+    #pragma GCC diagnostic pop
+#endif
+
+/*----------------------------------------------------------------------------
+  Reset Handler called on controller reset
+ *----------------------------------------------------------------------------*/
+__NO_RETURN void Reset_Handler(void)
+{
+    #if defined USE_CMSIS_INIT
+    SystemInit();           /* CMSIS System Initialization */
+    #endif /* USE_CMSIS_INIT */
+
+    /* Branch to main function */
+    __PROGRAM_START();      /* Enter PreMain (C library entry point) */
+}
+
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wmissing-noreturn"
+#endif
+
+/*----------------------------------------------------------------------------
+  Default Handler for Exceptions / Interrupts
+ *----------------------------------------------------------------------------*/
+volatile uint32_t g_vectactive;
+void Default_Handler(void)
+{
+    g_vectactive = (SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk) >> SCB_ICSR_VECTACTIVE_Pos;
+
+    __BKPT(0);
+    while (1);
+}
+
+#if defined(__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
+    #pragma clang diagnostic pop
+#endif

@@ -1,0 +1,17 @@
+cbuild-pack:
+  resolved-packs:
+    - resolved-pack: ARM::CMSIS@6.2.0
+      selected-by-pack:
+        - ARM::CMSIS
+    - resolved-pack: ARM::CMSIS-Compiler@2.1.0
+      selected-by-pack:
+        - ARM::CMSIS-Compiler
+    - resolved-pack: ARM::CMSIS-RTX@5.9.0
+      selected-by-pack:
+        - ARM::CMSIS-RTX
+    - resolved-pack: Microchip::CMSIS-Driver_PIC32CM-PL@1.0.1
+      selected-by-pack:
+        - Microchip::CMSIS-Driver_PIC32CM-PL
+    - resolved-pack: Microchip::PIC32CM-PL_DFP@1.1.324
+      selected-by-pack:
+        - Microchip::PIC32CM-PL_DFP

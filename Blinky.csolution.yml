@@ -1,0 +1,59 @@
+# A solution is a collection of related projects that share same base configuration.
+solution:
+  created-for: CMSIS-Toolbox@2.12.0
+  cdefault: # use CMSIS-Toolbox default Compiler options
+
+  # Compilers that can be selected
+  select-compiler:
+    - compiler: AC6
+    - compiler: GCC
+    - compiler: IAR
+    - compiler: CLANG
+
+  # Project define
+  define:
+    - OS_IDLE_THREAD_NAME: \"Idle\"
+    - OS_TIMER_THREAD_NAME: \"Timer\"
+
+  # List of miscellaneous tool-specific controls
+  misc:
+    - for-compiler: AC6 # GDB requires DWARF 5, remove when using uVision Debugger
+      C-CPP:
+        - -gdwarf-5
+      ASM:
+        - -gdwarf-5
+
+  # List the packs that define the device and/or board.
+  packs:
+    - pack: Microchip::CMSIS-Driver_PIC32CM-PL
+    - pack: Microchip::PIC32CM-PL_DFP
+    - pack: ARM::CMSIS
+
+  # List different hardware targets that are used to deploy the solution.
+  target-types:
+    - type: PIC32CM6408PL10048
+      board: PIC32CM6408PL10048-CNANO:Rev 1
+      device: PIC32CM6408PL10048
+      target-set:
+        - set:
+          images:
+            - project-context: Blinky.Debug
+          debugger:
+            name: CMSIS-DAP@pyOCD
+            clock: 10000000
+            protocol: swd
+
+  # List of different build configurations.
+  build-types:
+    - type: Debug
+      debug: on
+      optimize: none
+
+    - type: Release
+      debug: off
+      optimize: balanced
+
+  # List related projects.
+  projects:
+    - project: Blinky/Blinky.cproject.yml
+  compiler: AC6
