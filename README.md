@@ -13,14 +13,19 @@ Refer to [Project Configuration](#project-configuration) for board specific sett
    VS Code marketplace.
 2. Clone this Git repository into a VS Code workspace.
 3. The related tools and software packs are downloaded and installed. Review progress with
-   *View - Output - CMSIS Solution*.
+   **View - Output - CMSIS Solution**.
 4. In the **CMSIS** view, use the
    [Action buttons](https://github.com/ARM-software/vscode-cmsis-csolution?tab=readme-ov-file#action-buttons) to build,
    load and debug the example on the hardware.
 5. Observe the `LED0` and change its blinking frequency by pressing `SW0`.
-6. In the [VS Code Panel](https://code.visualstudio.com/api/ux-guidelines/panel), click on **SERIAL MONITOR**. Select
-   the **Monitor Mode** "SERIAL", set **View Mode** to "Text", select the **Port** to the "Microchip Technology" USB
-   device, and set the **Baud rate** to `115200`. Observe the output:
+6. In the [VS Code Panel](https://code.visualstudio.com/api/ux-guidelines/panel), click on **SERIAL MONITOR**. Set:
+   - **Monitor Mode**: `SERIAL`
+   - **View Mode**: `Text`
+   - **Port**: "Microchip Technology USB device (COM port)"
+   - **Baud rate**: `115200`
+   - **Line ending**: `CR`
+
+   Observe the output:
 
    ```txt
    Starting Blinky example...
