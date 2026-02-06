@@ -28,8 +28,8 @@ static osThreadId_t tid_thrLED;         // Thread id of thread: LED
 static osThreadId_t tid_thrButton;      // Thread id of thread: Button
 
 // Create thread attributes to show thread names in the XRTOS viewer:
-const osThreadAttr_t app_main_attr = {.name = "MainThread"};
-const osThreadAttr_t thrLED_attr = {.name = "LEDThread"};
+const osThreadAttr_t app_main_attr  = {.name = "MainThread"};
+const osThreadAttr_t thrLED_attr    = {.name = "LEDThread"};
 const osThreadAttr_t thrButton_attr = {.name = "ButtonThread"};
 
 /*-----------------------------------------------------------------------------

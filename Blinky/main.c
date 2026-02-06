@@ -70,9 +70,12 @@ int main (void) {
   // Main Application
   printf("\nStarting Blinky example...\r\n\n");
 
+  // CMSIS-Driver VIO initialization
   vioInit();
 
+  // Call the main application function
   app_main();
 
+  // main should never return, but if it does, loop indefinitely
   for (;;) {}
 }
