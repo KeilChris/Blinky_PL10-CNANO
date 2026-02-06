@@ -1,20 +1,30 @@
-# Blinky for Microchip PIC32CM PL10-CNANO
+# Blinky for Microchip PIC32CM PL10-Curiosity Nano
 
 The **Blinky** project can be easily used to verify the basic tool setup:
 
-- In the beginning, `vioLED0` (LED0 on the board) blinks in 1 sec interval.
-- Pressing `vioBUTTON0` )SW0 on the board) changes the blink frequency of `vioLED0`.
+- In the beginning, `vioLED0` (`LED0` on the board) blinks in 1 sec interval.
+- Pressing `vioBUTTON0` (`SW0` on the board) changes the blink frequency of `vioLED0`.
 
 Refer to [Project Configuration](#project-configuration) for board specific settings.
 
-## Prerequisites
+## Quick Start
 
-The following tools need to be installed on your machine:
+1. Install [Keil Studio for VS Code](https://marketplace.visualstudio.com/items?itemName=Arm.keil-studio-pack) from the
+   VS Code marketplace.
+2. Clone this Git repository into a VS Code workspace.
+3. The related tools and software packs are downloaded and installed. Review progress with
+   *View - Output - CMSIS Solution*.
+4. In the **CMSIS** view, use the
+   [Action buttons](https://github.com/ARM-software/vscode-cmsis-csolution?tab=readme-ov-file#action-buttons) to build,
+   load and debug the example on the hardware.
+5. Observe the `LED0` and change its blinking frequency by pressing `SW0`.
+6. In the [VS Code Panel](https://code.visualstudio.com/api/ux-guidelines/panel), click on **SERIAL MONITOR**. Select
+   the **Monitor Mode** "SERIAL", set **View Mode** to "Text", select the **Port** to the "Microchip Technology" USB
+   device, and set the **Baud rate** to `115200`. Observe the output:
 
-- [Microsoft Visual Studio Code](https://code.visualstudio.com/download) with
-  [Keil Studio Pack](https://marketplace.visualstudio.com/items?itemName=Arm.keil-studio-pack) extension
-- [Arm Compiler 6](https://developer.arm.com/Tools%20and%20Software/Arm%20Compiler%20for%20Embedded) (automatically
-  installed when using Visual Studio Code with vcpkg)
+   ```txt
+   Starting Blinky example...
+   ```
 
 ## Project Configuration
 
@@ -36,36 +46,3 @@ It is configured with the following settings:
 
 Refer to [Configure RTX v5](https://arm-software.github.io/CMSIS-RTX/latest/config_rtx5.html) for a detailed
 description of all configuration options.
-
-## Build solution
-
-Required tools described in file `vcpkg-configuration.json` will be automatically installed by vcpkg. You can see the
-status of vcpkg in the status bar (**Arm Tools**). Required CMSIS packs will also be installed automatically.
-
-Open the **CMSIS view** from the side bar and press the **Build** button.
-
-## Run and debug
-
-### Run
-
-- Connect the board's USB-C to the PC (provides also power).
-- Open the **CMSIS** view from the side bar and press the **Run** button and wait until the image is programmed and
-  starts running.
-
-### Debug
-
-Open the **CMSIS** view from the side bar and press the **Debug** button. A connection is established via the on-board
-[nEDBG](https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/UserGuides/Microchip-Nano-Debugger-Manual-DS50003996.pdf)
-debug adapter.
-
-RTOS awareness is available through the **XRTOS** view in the bottom panel.
-
-### printf output
-
-`printf` output is redirected to the **SERIAL MONITOR** in VS Code. Observe the output with the following settings:
-
-- Monitor Mode: SERIAL
-- View Mode: Text
-- Port: Select the Microchip Technology usbmodem
-- Baud rate: `115200`
-- Line ending: CR
